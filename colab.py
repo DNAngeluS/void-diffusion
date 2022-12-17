@@ -31,7 +31,7 @@ def init(ModelName):
         try:
             from diffusers import StableDiffusionPipeline, StableDiffusionImg2ImgPipeline, StableDiffusionInpaintPipeline
             from transformers import AutoTokenizer
-            rev = "diffusers-115k" if model_name == "naclbit/trinart_stable_diffusion_v2" else "fp16"
+            rev = "main" if model_name == "naclbit/trinart_derrida_characters_v2_stable_diffusion" else "diffusers-115k" if model_name == "naclbit/trinart_stable_diffusion_v2" else "fp16"
             text2img = StableDiffusionPipeline.from_pretrained(model_name, revision=rev, torch_dtype=torch.float16).to("cuda:0")
             img2img = StableDiffusionImg2ImgPipeline(**text2img.components)
             inpaint = StableDiffusionInpaintPipeline(**text2img.components)
