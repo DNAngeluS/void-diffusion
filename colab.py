@@ -2,6 +2,8 @@ import patcher, torch, random, time
 from IPython import display
 from IPython.display import HTML
 model_name = ""
+rev = "main"
+scheduler_name = "Default"
 ready = False
 tokenizer = None
 text2img = None
@@ -18,9 +20,12 @@ def get_current_image_seed():
 def get_current_image_uid():
     return "text2img-%d" % get_current_image_seed()
 def init(ModelName):
-    global model_name, ready, text2img, img2img, inpaint
+    global model_name, rev, scheduler_name, ready, text2img, img2img, inpaint
     model_name = ModelName
+    rev = Revision
+    scheduler_name = Scheduler
     settings['ModelName'] = ModelName
+    settings['SchedulerName'] = Scheduler
     patcher.patch()
     if not torch.cuda.is_available():
         print("No GPU found. If you are on Colab, go to Runtime -> Change runtime type, and choose \"GPU\" then click Save.")
@@ -31,7 +36,7 @@ def init(ModelName):
         try:
             from diffusers import StableDiffusionPipeline, StableDiffusionImg2ImgPipeline, StableDiffusionInpaintPipeline
             from transformers import AutoTokenizer
-            rev = "main" if model_name == "naclbit/trinart_derrida_characters_v2_stable_diffusion" else "diffusers-115k" if model_name == "naclbit/trinart_stable_diffusion_v2" else "fp16"
+            #rev = "main" if model_name == "naclbit/trinart_derrida_characters_v2_stable_diffusion" else "diffusers-115k" if model_name == "naclbit/trinart_stable_diffusion_v2" else "fp16"
             text2img = StableDiffusionPipeline.from_pretrained(model_name, revision=rev, torch_dtype=torch.float16).to("cuda:0")
             img2img = StableDiffusionImg2ImgPipeline(**text2img.components)
             inpaint = StableDiffusionInpaintPipeline(**text2img.components)
