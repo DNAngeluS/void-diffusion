@@ -68,14 +68,8 @@ def config(Scheduler: Optional[str]):
     scheduler_name = Scheduler
     settings["SchedulerName"] = Scheduler
     try:
-      from diffusers.schedulers import (
-        DDIMScheduler,
-        DPMSolverMultistepScheduler,
-        EulerAncestralDiscreteScheduler,
-        EulerDiscreteScheduler,
-        LMSDiscreteScheduler,
-        PNDMScheduler,
-      )
+      from diffusers.schedulers import DDIMScheduler, DPMSolverMultistepScheduler, EulerAncestralDiscreteScheduler, EulerDiscreteScheduler, LMSDiscreteScheduler, PNDMScheduler
+      
       match scheduler_name:
         case "K-EULER":
           text2img.scheduler = EulerDiscreteScheduler.from_config(pipe.scheduler.config)
