@@ -1,4 +1,4 @@
-import inspect, colab
+import inspect
 from typing import Callable, List, Optional, Union
 
 import torch
@@ -22,28 +22,7 @@ from diffusers.utils import deprecate, logging
 from diffusers.pipelines.stable_diffusion import StableDiffusionPipelineOutput
 from diffusers.pipelines.stable_diffusion import StableDiffusionSafetyChecker
 
-
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
-
-def config(scheduler: Optional[str]):
-    r"""
-    Configures and prepares the pipeline Scheduler
-    Args:
-        scheduler('Default' or 'K-EULER' or 'DDIM' or 'K-LMS' or 'DPMSolver-Multistep')
-    """
-    pipe = colab.text2img
-    match scheduler:
-      case "K-EULER":
-        pipe.scheduler = EulerDiscreteScheduler.from_config(pipe.scheduler.config)
-      case "DDIM":
-        pipe.scheduler = DDIMScheduler.from_config(pipe.scheduler.config)
-      case "K-LMS":
-        pipe.scheduler = LMSDiscreteScheduler.from_config(pipe.scheduler.config)
-      case "DPMSolver-Multistep":
-        pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
-      case "Default":
-        return
-    return
 
 def text2img_encode_prompt(self, prompt, device, num_images_per_prompt, do_classifier_free_guidance, negative_prompt):
     r"""
