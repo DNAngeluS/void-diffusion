@@ -20,7 +20,7 @@ def get_current_image_seed():
 def get_current_image_uid():
     return "text2img-%d" % get_current_image_seed()
 def init(ModelName, Revision):
-    global model_name, rev, scheduler_name, ready, text2img, img2img, inpaint
+    global model_name, rev, ready, text2img, img2img, inpaint
     model_name = ModelName
     rev = Revision
     settings['ModelName'] = ModelName
@@ -69,7 +69,6 @@ def config(Scheduler: Optional[str]):
     settings["SchedulerName"] = Scheduler
     try:
       from diffusers.schedulers import DDIMScheduler, DPMSolverMultistepScheduler, EulerAncestralDiscreteScheduler, EulerDiscreteScheduler, LMSDiscreteScheduler, PNDMScheduler
-      
       match scheduler_name:
         case "K-EULER":
           text2img.scheduler = EulerDiscreteScheduler.from_config(pipe.scheduler.config)
