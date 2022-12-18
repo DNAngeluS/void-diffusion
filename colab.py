@@ -69,16 +69,15 @@ def config(Scheduler: Optional[str]):
     settings["SchedulerName"] = Scheduler
     try:
       from diffusers.schedulers import DDIMScheduler, DPMSolverMultistepScheduler, EulerAncestralDiscreteScheduler, EulerDiscreteScheduler, LMSDiscreteScheduler, PNDMScheduler
-      match scheduler_name:
-        case "K-EULER":
-          text2img.scheduler = EulerDiscreteScheduler.from_config(pipe.scheduler.config)
-        case "DDIM":
-          text2img.scheduler = DDIMScheduler.from_config(pipe.scheduler.config)
-        case "K-LMS":
-          text2img.scheduler = LMSDiscreteScheduler.from_config(pipe.scheduler.config)
-        case "DPMSolver-Multistep":
-          text2img.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
-        case "Default":
-          return
+      if scheduler_name == "K-EULER":
+        text2img.scheduler = EulerDiscreteScheduler.from_config(pipe.scheduler.config)
+      elif scheduler_name == "DDIM":
+        text2img.scheduler = DDIMScheduler.from_config(pipe.scheduler.config)
+      if scheduler_name == "K-LMS":
+        text2img.scheduler = LMSDiscreteScheduler.from_config(pipe.scheduler.config)
+      elif scheduler_name == "DPMSolver-Multistep":
+        text2img.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+      else:
+        return
     except Exception as e:
           print("Failed to config scheduler %s with error %s" % (scheduler_name, e))    
