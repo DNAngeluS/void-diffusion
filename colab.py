@@ -58,7 +58,7 @@ def prepare(mode):
     current_mode = mode
     torch.cuda.empty_cache()
 
-def config(Scheduler: Optional[str]):
+def config(Scheduler):
     r"""
     Configures and prepares the pipeline Scheduler
     Args:
