@@ -74,7 +74,8 @@ def config(Scheduler: Optional[str]):
         EulerAncestralDiscreteScheduler,
         EulerDiscreteScheduler,
         LMSDiscreteScheduler,
-        PNDMScheduler)
+        PNDMScheduler,
+      )
       match scheduler_name:
         case "K-EULER":
           text2img.scheduler = EulerDiscreteScheduler.from_config(pipe.scheduler.config)
