@@ -19,13 +19,11 @@ def get_current_image_seed():
     return settings['InitialSeed'] + image_id
 def get_current_image_uid():
     return "text2img-%d" % get_current_image_seed()
-def init(ModelName):
+def init(ModelName, Revision):
     global model_name, rev, scheduler_name, ready, text2img, img2img, inpaint
     model_name = ModelName
     rev = Revision
-    scheduler_name = Scheduler
     settings['ModelName'] = ModelName
-    settings['SchedulerName'] = Scheduler
     patcher.patch()
     if not torch.cuda.is_available():
         print("No GPU found. If you are on Colab, go to Runtime -> Change runtime type, and choose \"GPU\" then click Save.")
